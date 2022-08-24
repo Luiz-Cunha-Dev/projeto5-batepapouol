@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="icon" href="imgs/uol-logocom.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        </style>
+    <title>Bate-Papo UOL</title>
+</head>
+<body>
+    <div class="topo">
+        <img src="imgs/logo 1.png">
+       <ion-icon name="people" onclick="tirarHidden()"></ion-icon>
+    </div>
+
+<div class="mensagens">
+<div class="mensagem">
+    <div class="hora">(09:21:45)</div>
+    <div class="nome negrito">João</div>
+    <div>para</div>
+    <div class="destinatario"><span class="negrito">Todos</span>:</div>
+    <div class="texto">Bom dia</div>
+</div>
+<div class="mensagem"></div>
+</div>
+
+<div class="caixa-de-mensagem">
+    <input type="text">
+    <ion-icon name="paper-plane-outline"></ion-icon>
+</div>
+
+<div class="janela-vazia hidden" onclick="tirarHidden()"></div>
+<div class="menu-lateral hidden">
+    <div class="titulo-menu">
+        Escolha um contato <br>
+        para enviar mensagem:</div>
+    <div class="opcoes-contato">
+        <div class="todos">
+            <ion-icon name="people"></ion-icon>
+            <span>Todos</span>
+        </div>
+        <div class="contato">
+            <ion-icon name="person-circle"></ion-icon>
+            <span>Contato</span>
+        </div>
+    </div>
+    <div class="opcoes-visibilidade">
+        <div class="titulo-visibilidade"> Escolha a visibilidade:</div>
+        <div class="publico">
+            <ion-icon name="lock-open"></ion-icon>
+            <span>Público</span>
+        </div>
+        <div class="reservadamente">
+            <ion-icon name="lock-closed"></ion-icon>
+            <span>Reservadamente</span>
+        </div>
+    </div>
+</div>
+
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
