@@ -10,27 +10,39 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
         </style>
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
     <title>Bate-Papo UOL</title>
 </head>
 <body>
+    <div class="janela-login">
+        <div class="login ">
+            <img src="imgs/logo 2.png">
+            <input class="entrada-nome" type="text" placeholder="Digite seu nome">
+            <button onclick="login()">Entrar</button>
+        </div>
+    </div>
+
     <div class="topo">
         <img src="imgs/logo 1.png">
-       <ion-icon name="people" onclick="tirarHidden()"></ion-icon>
+        <ion-icon name="people" onclick="tirarHidden()"></ion-icon>
     </div>
 
 <div class="mensagens">
-<div class="mensagem">
-    <div class="hora">(09:21:45)</div>
-    <div class="nome negrito">João</div>
-    <div>para</div>
-    <div class="destinatario"><span class="negrito">Todos</span>:</div>
-    <div class="texto">Bom dia</div>
-</div>
-<div class="mensagem"></div>
+    <div class="mensagem-normal">
+        <div class="hora">(09:21:45)</div>
+        <div class="nome negrito">João</div>
+        <div>para</div>
+        <div class="destinatario"><span class="negrito">Todos</span>:</div>
+     <div class="texto">Bom dia</div>
+    </div>
+
 </div>
 
 <div class="caixa-de-mensagem">
-    <input type="text">
+    <div class="campo-de-mensagem">
+        <input type="text" placeholder="Escreva aqui...">
+        <span>Enviando para Maria (reservadamente)</span>
+    </div>
     <ion-icon name="paper-plane-outline"></ion-icon>
 </div>
 
@@ -62,7 +74,7 @@
     </div>
 </div>
 
-    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
