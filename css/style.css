@@ -82,7 +82,7 @@
     margin-top: 26px;
   }
 
-  .mensagem-normal{
+  .mensagem{
     margin-top: 4px;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -91,34 +91,16 @@
     background-color: #FFFFFF;
   }
 
-  .mensagem-reservada{
-    margin-top: 4px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 8px;
-    padding-right: 9px;
+  .reservada{
     background-color: #FFDEDE;
-    display: flex;
-    align-items: center;
-
   }
 
-  .mensagem-status{
-    margin-top: 4px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 8px;
-    padding-right: 9px;
+  .status{
     background-color: #DCDCDC;
-    display: flex;
-    align-items: center;
   }
+
 
   .hora{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
     color: #AAAAAA;
   }
 
@@ -146,6 +128,7 @@
   flex-direction: column;
   align-items: center;
   transition: all 1s; 
+  overflow: scroll;
 }
 
 .hidden{

@@ -47,11 +47,12 @@ function login(){
 function tudoCertoEnvioNome(resposta){
     janelaLogin.classList.add('hidden');
     setInterval(ReceberMensagens, 3000);
+    setInterval(receberParticipantes, 3000);
     setInterval(online, 5000);
 }
 
 function deuErroEvioNome(resposta){
-    alert('nome ja existente, digite outro nome para prosseguir');
+    alert('Nome ja existente, digite outro nome para prosseguir');
 }
 
 function online(){
@@ -61,7 +62,7 @@ function online(){
 }
 
 function status(resposta){
-    console.log(resposta);
+
 }
 
 
@@ -82,51 +83,117 @@ function deuErroRetorno(resposta){
     console.log(resposta);
 }
 
+function receberParticipantes(){
+    let promessaParticipantes = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
+    promessaParticipantes.then(tudoCertoPartcipantes);
+    promessaParticipantes.catch(deuErroParticipantes);
+}
+
+function tudoCertoPartcipantes(resposta){
+    adicionarParticipantes(resposta);
+
+}
+
+function deuErroParticipantes(resposta){
+    console.log(resposta)
+}
+
+
+function adicionarParticipantes(participantesOnline){
+    let contatos = document.querySelector('.opcoes-contato')
+    contatos.innerHTML = '';
+
+    for(let i = 0; i < participantesOnline.data.length; i++){
+        let participante =
+        `<div class="contato">
+        <ion-icon name="person-circle"></ion-icon>
+        <span>${participantesOnline.data[i].name}</span>
+    </div>
+        `;
+    
+    contatos.innerHTML += participante;
+
+    }
+
+}
+
+
+
 function adicionarMensagens(mensagens){
 quadroDeMensagens = document.querySelector('.mensagens');
 quadroDeMensagens.innerHTML = '';
 
 
-
 for(let i = 0; i < mensagens.data.length; i++){
+
+    if(mensagens.data[i].type === 'status'){
+        mensagem =
+        `<div class="mensagem status">
+        <p>
+        <span class="hora">(${mensagens.data[i].time})</span>
+        <span class="nome negrito">${mensagens.data[i].from}</span>
+        <span>para</span>
+        <span class="destinatario"><span class="negrito">${mensagens.data[i].to}</span>:</span>
+         <span class="texto">${mensagens.data[i].text}</span>
+        <p>
+        </div>
+        `;
     
-    let mensagem =
-    `<div class="mensagem-normal">
-    <p>
-    <span class="hora">(${mensagens.data[i].time})</span>
-    <span class="nome negrito">${mensagens.data[i].from}</span>
-    <span>para</span>
-    <span class="destinatario"><span class="negrito">${mensagens.data[i].to}</span>:</span>
-     <span class="texto">${mensagens.data[i].text}</span>
-    <p>
-    </div>
-    `;
+    quadroDeMensagens.innerHTML += mensagem;
 
-quadroDeMensagens.innerHTML += mensagem;
+    } else if(mensagens.data[i].to === entradaNome.value){
+        mensagem =
+        `<div class="mensagem reservada">
+        <p>
+        <span class="hora">(${mensagens.data[i].time})</span>
+        <span class="nome negrito">${mensagens.data[i].from}</span>
+        <span>para</span>
+        <span class="destinatario"><span class="negrito">${mensagens.data[i].to}</span>:</span>
+         <span class="texto">${mensagens.data[i].text}</span>
+        <p>
+        </div>
+        `;
+    
+    quadroDeMensagens.innerHTML += mensagem;
 
+    }else if(mensagens.data[i].to !== 'Todos'){
+    }else{
 
+        let mensagem =
+        `<div class="mensagem">
+        <p>
+        <span class="hora">(${mensagens.data[i].time})</span>
+        <span class="nome negrito">${mensagens.data[i].from}</span>
+        <span>para</span>
+        <span class="destinatario"><span class="negrito">${mensagens.data[i].to}</span>:</span>
+         <span class="texto">${mensagens.data[i].text}</span>
+        <p>
+        </div>
+        `;
+    
+    quadroDeMensagens.innerHTML += mensagem;
+    
+    }
+    
 }
 
 while(contador < 1){
-    const elementoApareca = document.querySelectorAll('.mensagem-normal ');
-    elementoApareca[[99]].scrollIntoView();
+    const elementoApareca = document.querySelectorAll('.mensagem');
+    elementoApareca[elementoApareca.length - 1].scrollIntoView();
     contador++;
 }
 
 if (mensagemAnterior === ''){
     mensagemAnterior = mensagens.data[99];
-    console.log( mensagemAnterior);
 
 }else if(novaMensagem === ''){
     novaMensagem = mensagens.data[99];
-    console.log( novaMensagem);
 
     if(mensagemAnterior === novaMensagem){
         novaMensagem = '';
-        console.log( novaMensagem);
     }else{
-        const elementoQueQueroQueApareca = document.querySelectorAll('.mensagem-normal ');
-        elementoQueQueroQueApareca[[99]].scrollIntoView();
+        const elementoQueQueroQueApareca = document.querySelectorAll('.mensagem');
+        elementoQueQueroQueApareca[elementoQueQueroQueApareca.length - 1].scrollIntoView();
 
         mensagemAnterior = '';
         novaMensagem = '';
@@ -138,11 +205,9 @@ if (mensagemAnterior === ''){
 
 
 
-
 function mandarMensagem(){
     CampoDeMensagem = document.querySelector('.campo-de-mensagem input');
     mensagem = CampoDeMensagem.value;
-    console.log(mensagem)
 
     if (mensagem !== ''){
 
@@ -162,7 +227,6 @@ function mandarMensagem(){
     
     
     function tudoCertoMensagem(resposta){
-    console.log(resposta);
     CampoDeMensagem.value = '';
     ReceberMensagens();
     }
