@@ -13,7 +13,7 @@ let escondido = "hidden";
 let ultimoSelecionado = '';
 let cont = 0;
 let contatoSelecionado;
-let =  visibilidadeEscolhida;
+let =  visibilidadeEscolhida = "message";
 
 document.addEventListener("keypress", function(e) {
     if(e.key === "Enter"){
@@ -305,26 +305,6 @@ function mandarMensagem(){
     }
     
     }
-
-    function mandarMensagemEnter(e){
-        CampoDeMensagem = document.querySelector('.campo-de-mensagem input');
-        mensagem = CampoDeMensagem.value;
-    
-            if (mensagem !== ''){
-    
-                let MensagemParaEnviar ={
-                    from: entradaNome.value,
-                    to: contatoEscolhido,
-                    text: mensagem,
-                    type: "message"
-                }
-                console.log(MensagemParaEnviar)
-                let promessaMensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', MensagemParaEnviar)
-                    promessaMensagemEnviada.then(tudoCertoMensagem);
-                    promessaMensagemEnviada.catch(deuErroMensagem);
-            }
-        
-        }
     
     
     function tudoCertoMensagem(resposta){
@@ -336,4 +316,3 @@ function mandarMensagem(){
         alert('Sua sessão expirou');
         window.location.reload()
     }
-    
