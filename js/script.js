@@ -8,6 +8,26 @@ let CampoDeMensagem;
 let mensagemAnterior = '';
 let novaMensagem = '';
 let contador = 0;
+let contatoEscolhido = 'Todos';
+let escondido = "hidden";
+let ultimoSelecionado = '';
+let cont = 0;
+
+document.addEventListener("keypress", function(e) {
+    if(e.key === "Enter"){
+        const btn = document.querySelector('.caixa-de-mensagem ion-icon');
+        btn.click();
+
+
+        while(cont < 1){
+            const btnLogin = document.querySelector('.login button');
+            btnLogin.click();
+            cont++
+        }
+    }
+})
+
+
 
 function tirarHidden(){
     let menuLateral = document.querySelector('.menu-lateral');
@@ -46,9 +66,12 @@ function login(){
 
 function tudoCertoEnvioNome(resposta){
     janelaLogin.classList.add('hidden');
+    ReceberMensagens();
+    receberParticipantes();
     setInterval(ReceberMensagens, 3000);
-    setInterval(receberParticipantes, 3000);
+    setInterval(receberParticipantes, 15000);
     setInterval(online, 5000);
+    cont++
 }
 
 function deuErroEvioNome(resposta){
@@ -74,7 +97,9 @@ function ReceberMensagens(){
 
 
 function tudoCertoRetorno(resposta){
-    adicionarMensagens(resposta)
+    adicionarMensagens(resposta);
+    const loading = document.querySelector('.loading');
+    loading.classList.add('hidden');
 
 }
 
@@ -101,13 +126,20 @@ function deuErroParticipantes(resposta){
 
 function adicionarParticipantes(participantesOnline){
     let contatos = document.querySelector('.opcoes-contato')
-    contatos.innerHTML = '';
+    contatos.innerHTML = `
+    <div class="todos" onclick="selecionarParticipante(this)">
+    <ion-icon name="people"></ion-icon>
+    <span>Todos</span>
+    <img class="hidden" src="imgs/Vector (1).png">
+    </div>
+    `;
 
     for(let i = 0; i < participantesOnline.data.length; i++){
         let participante =
-        `<div class="contato">
+        `<div class="contato" onclick="selecionarParticipante(this)">
         <ion-icon name="person-circle"></ion-icon>
         <span>${participantesOnline.data[i].name}</span>
+        <img class="hidden" src="imgs/Vector (1).png">
     </div>
         `;
     
@@ -116,6 +148,21 @@ function adicionarParticipantes(participantesOnline){
     }
 
 }
+
+function selecionarParticipante(participante){
+   
+    if(ultimoSelecionado === participante )
+
+    if(participante.children[2].className === 'hidden'){
+        participante.children[2].classList.remove('hidden');
+    }else{
+        participante.children[2].classList.add('hidden');
+    }
+
+    ultimoSelecionado = participante;
+}
+
+
 
 
 
@@ -213,7 +260,7 @@ function mandarMensagem(){
 
         let MensagemParaEnviar ={
             from: entradaNome.value,
-	        to: "Todos",
+	        to: contatoEscolhido,
 	        text: mensagem,
 	        type: "message"
         }
@@ -224,6 +271,26 @@ function mandarMensagem(){
     }
     
     }
+
+    function mandarMensagemEnter(e){
+        CampoDeMensagem = document.querySelector('.campo-de-mensagem input');
+        mensagem = CampoDeMensagem.value;
+    
+            if (mensagem !== ''){
+    
+                let MensagemParaEnviar ={
+                    from: entradaNome.value,
+                    to: contatoEscolhido,
+                    text: mensagem,
+                    type: "message"
+                }
+                console.log(MensagemParaEnviar)
+                let promessaMensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', MensagemParaEnviar)
+                    promessaMensagemEnviada.then(tudoCertoMensagem);
+                    promessaMensagemEnviada.catch(deuErroMensagem);
+            }
+        
+        }
     
     
     function tudoCertoMensagem(resposta){
