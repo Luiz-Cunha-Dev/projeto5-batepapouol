@@ -12,6 +12,8 @@ let contatoEscolhido = 'Todos';
 let escondido = "hidden";
 let ultimoSelecionado = '';
 let cont = 0;
+let contatoSelecionado;
+let =  visibilidadeEscolhida;
 
 document.addEventListener("keypress", function(e) {
     if(e.key === "Enter"){
@@ -53,6 +55,7 @@ function login(){
    
     if(entradaNome.value === ''){
         alert('Digite um nome para prosseguir');
+        cont = 0;
         return;
     }
 
@@ -90,7 +93,7 @@ function status(resposta){
 
 
 function ReceberMensagens(){
-    let promessaRecebida = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages')
+    let promessaRecebida = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promessaRecebida.then(tudoCertoRetorno);
     promessaRecebida.catch(deuErroRetorno);
 }
@@ -150,16 +153,47 @@ function adicionarParticipantes(participantesOnline){
 }
 
 function selecionarParticipante(participante){
+   contatoSelecionado = document.querySelector('.opcoes-contato .selecionado')
+
+   if(contatoSelecionado !== null){
+    contatoSelecionado.classList.remove('selecionado');
+    contatoSelecionado.classList.add('hidden');
+   }
    
-    if(ultimoSelecionado === participante )
 
     if(participante.children[2].className === 'hidden'){
         participante.children[2].classList.remove('hidden');
-    }else{
-        participante.children[2].classList.add('hidden');
+        participante.children[2].classList.add('selecionado');
     }
 
-    ultimoSelecionado = participante;
+    contatoEscolhido = participante.children[1].innerHTML;
+    console.log(contatoEscolhido);
+    const nomeContato = document.querySelector('.selecao-contato');
+    nomeContato.innerHTML= contatoEscolhido;
+}
+
+
+function selecionarVisibilidade(opcao){
+const visibilidadeSelecionada = document.querySelector('.opcoes-visibilidade .selecionado');
+
+if(visibilidadeSelecionada !== null){
+    visibilidadeSelecionada.classList.remove('selecionado');
+    visibilidadeSelecionada.classList.add('hidden');
+}
+
+    opcao.children[2].classList.add('selecionado');
+    opcao.children[2].classList.remove('hidden');
+
+    const visibilidade = document.querySelector('.visibilidade');
+    visibilidadeEscolhida = opcao.children[1].innerHTML;
+    visibilidade.innerHTML = `(${visibilidadeEscolhida})`;
+
+    if(visibilidadeEscolhida !== "Público"){
+        visibilidadeEscolhida = "message"
+    }else{
+        visibilidadeEscolhida = "private_message"
+    }
+
 }
 
 
@@ -262,7 +296,7 @@ function mandarMensagem(){
             from: entradaNome.value,
 	        to: contatoEscolhido,
 	        text: mensagem,
-	        type: "message"
+	        type: visibilidadeEscolhida
         }
         console.log(MensagemParaEnviar)
         let promessaMensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', MensagemParaEnviar)
@@ -299,6 +333,7 @@ function mandarMensagem(){
     }
     
     function deuErroMensagem(resposta){
+        alert('Sua sessão expirou');
         window.location.reload()
     }
     

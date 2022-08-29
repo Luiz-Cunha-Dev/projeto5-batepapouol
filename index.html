@@ -39,7 +39,7 @@
 <div class="caixa-de-mensagem">
     <div class="campo-de-mensagem">
         <input type="text" placeholder="Escreva aqui...">
-        <span>Enviando para Todos (público)</span>
+        <span>Enviando para <span class="selecao-contato">Todos</span><span class="visibilidade">(público)</span></span>
     </div>
     <ion-icon name="paper-plane-outline" onclick="mandarMensagem()"></ion-icon>
 </div>
@@ -52,13 +52,15 @@
     <div class="opcoes-contato"></div>
     <div class="opcoes-visibilidade">
         <div class="titulo-visibilidade">Escolha a visibilidade:</div>
-        <div class="publico">
+        <div class="publico" onclick="selecionarVisibilidade(this)">
             <ion-icon name="lock-open"></ion-icon>
             <span>Público</span>
+            <img class="hidden" src="imgs/Vector (1).png">
         </div>
-        <div class="reservadamente">
+        <div class="reservadamente" onclick="selecionarVisibilidade(this)">
             <ion-icon name="lock-closed"></ion-icon>
             <span>Reservadamente</span>
+            <img class="hidden" src="imgs/Vector (1).png">
         </div>
     </div>
 </div>
